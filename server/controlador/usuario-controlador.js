@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const usuarios = require('../models/usuariosDb');
 const bcrypt = require('bcrypt');
+const blacklistedTokens = require('../config/blacklist');
 
 module.exports = {
   adiciona: async (req, res) => {
@@ -102,6 +103,15 @@ module.exports = {
     }
   
     res.status(200).json({ user });
+  },
+
+  logout: (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+
+    // adicionar o token JWT atual na lista negra
+    blacklistedTokens.push(token);
+  
+    res.status(200).send('Logout realizado com sucesso');
   }
 };
 

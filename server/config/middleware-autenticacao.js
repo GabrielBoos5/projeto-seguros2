@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const blacklistedTokens = require('./blacklist');
 
 module.exports = {
     local: (req, res, next) =>{
@@ -8,6 +9,10 @@ module.exports = {
         console.log(token)
 
         if (!token) return res.status(401).json({ msg: "Acesso negado!" });
+
+        if (blacklistedTokens.includes(token)) {
+            return res.status(401).send('Token JWT inválido');
+        }
 
         try {
         const secret = process.env.SECRET;

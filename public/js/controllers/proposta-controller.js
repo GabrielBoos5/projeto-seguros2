@@ -1,7 +1,9 @@
-angular.module('seguro').controller("PropostaController", function ($scope, $routeParams, $http, $location) {
+angular.module('seguro').controller("PropostaController", function ($scope, $routeParams, $http, $location, $window) {
 
     if (!$routeParams.propostaId) $location.path("/lista")
 
+    const token = localStorage.getItem('token');
+    $http.defaults.headers.common.Authorization = 'Bearer ' + token;
 
     $http.get('/proposta/' + $routeParams.propostaId)
         .then((proposta) => {
@@ -12,7 +14,21 @@ angular.module('seguro').controller("PropostaController", function ($scope, $rou
             $scope.proposta.terminovigencia = new Date($scope.proposta.terminovigencia);
         }).catch((error) => {
             console.log(error)
+            $window.location.href = "http://localhost:3000/#/login";
         });
+
+    $scope.logout = function () {
+        $http.post('/logout')
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                // Erro - lidar com o erro
+                console.log(error);
+                $window.location.href = "http://localhost:3000/#/login";
+            });
+    }
+
 
     $scope.elaborarApolice = function () {
         const novaApolice = angular.copy($scope.proposta)

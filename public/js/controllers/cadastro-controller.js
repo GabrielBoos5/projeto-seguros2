@@ -42,6 +42,16 @@ angular.module('seguro').controller("CadastroController", function ($scope, $htt
     $scope.cotacao.n_cotacao = __getAntigoNumero();
   }
 
+  $scope.logout = function () {
+    $http.post('/logout')
+                .then(function (response) {
+                  console.log(response);
+                })
+                .catch(function (error) {
+                  console.log(error);
+                  $window.location.href = "http://localhost:3000/#/login";
+                });
+  }
 
   $scope.elaborarProposta = function () {
     if ($routeParams.cotacaoId) {

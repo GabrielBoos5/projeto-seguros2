@@ -14,4 +14,12 @@
   transform: scale(0.1);
 } 
 
+.logout-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 10px;
+}
+
+
 

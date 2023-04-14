@@ -4,8 +4,8 @@ const middlewaresAutenticacao = require('../config/middleware-autenticacao')
 
 module.exports = (app) => {
     app.route('/apolice')
-        .post(ApoliceApiController.adiciona)
-        .get(ApoliceApiController.lista)
+        .post(middlewaresAutenticacao.local, ApoliceApiController.adiciona)
+        .get(middlewaresAutenticacao.local, ApoliceApiController.lista)
 
     app.route('/apolice/:id')
     .delete(middlewaresAutenticacao.local,ApoliceApiController.excluiPorId)

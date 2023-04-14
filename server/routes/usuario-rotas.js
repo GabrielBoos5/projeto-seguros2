@@ -13,4 +13,7 @@ module.exports = (app) => {
     app.route('/user/:id')
     .get(middlewaresAutenticacao.local, UsuarioApiController.buscaPorId)
 
+    app.route('/logout')
+    .post(UsuarioApiController.logout)
+
 }
